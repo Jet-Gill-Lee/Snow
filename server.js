@@ -7,6 +7,7 @@ const expressLayouts = require('express-ejs-layouts')
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
+const bodyParser = require('body-parser')
 db.on('error', error => console.error(error))
 db.once('open', () => {console.log('connected to database')})
 
@@ -15,9 +16,13 @@ app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 app.use(express.static('public'))
+app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
 
 
 const indexRouter = require('./routes/index')
+const jobRouter = require('./routes/jobs')
 app.use('/', indexRouter)
+app.use('/jobs', jobRouter)
+
 app.listen(process.env.PORT || 3000, () => console.log('server started'))
 
