@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     const jobs = await Job.find(searchOptions)
     res.render('jobs/index', {jobs: jobs, searchOptions: req.query})
   } catch {
-    res.redirect('/')
+    res.send('unable to load page')
 
   }
 })
