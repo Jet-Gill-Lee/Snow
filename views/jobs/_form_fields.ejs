@@ -1,2 +1,24 @@
-<label for="title">Title</label>
-<input type="text" name="title" value="<%= job.title %>">
+<label>Title</label>
+<br>
+<input type="text" name="title" value="<%= job.title%>">
+<br>
+<label>Wage/hour</label>
+<br>
+<input type="number" name="wage" value="<%= job.wage %>">
+<br>
+<label>Employer</label>
+<br>
+<select name="employer">
+<% employers.forEach(employer => { %>
+<% if (employer.id === job.employer) { %>
+  <option selected label="<%=employer.name%>" value="<%=employer.id%>">
+<% } else { %>
+  <option label="<%=employer.name%>" value="<%=employer.id%>">
+  <% } %>
+<% }) %>
+</select>
+<br>
+<label>Job description</label>
+<br>
+<textarea name="description" value="<%= job.description%>">A description of the job</textarea>
+

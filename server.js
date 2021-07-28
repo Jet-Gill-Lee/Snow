@@ -20,9 +20,10 @@ app.use(bodyParser.urlencoded({limit: '10mb', extended: false}))
 
 
 const indexRouter = require('./routes/index')
-const jobRouter = require('./routes/jobs')
+const employersRouter = require('./routes/employers')
+const jobsRouter = require('./routes/jobs')
 app.use('/', indexRouter)
-app.use('/jobs', jobRouter)
-
+app.use('/employers', employersRouter)
+app.use('/jobs', jobsRouter)
 app.listen(process.env.PORT || 3000, () => console.log('server started'))
 
