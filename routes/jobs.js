@@ -22,7 +22,6 @@ router.get('/', async (req, res) => {
       }
     }
     jobsToPrint()
-    
     jobsList.forEach(job => {
     let jobInner = job.title.toLowerCase()
     if (jobInner.includes(searchTitle) || searchTitle == null || ''){
