@@ -3,6 +3,7 @@ const router = express.Router();
 const Job = require('../models/job')
 const Employer = require('../models/employer');
 const employer = require('../models/employer');
+const { response } = require('express');
 
 //Display all jobs
 router.get('/', async (req, res) => {
@@ -62,13 +63,9 @@ router.get('/', async (req, res) => {
         }
       }) 
     } else if (req.query.employer) {
-      console.log('now here')
       let jobsList = await Job.find() 
       let employerID = req.query.employer
-      console.log(array1)
-      console.log('employer search ' + employerID)
       jobsList.forEach(job => { 
-        console.log('iterate')
         if (job.employer == employerID) {
           array1.push(job)
         }
@@ -117,6 +114,70 @@ async function renderNewPage(res, job, hasError) {
     res.redirect('/jobs')
   }
 }
+//SHOW JOB
+router.get('/:id', async (req, res) => {
+  try {
+  let job = await Job.findById(req.params.id)
+  let employerID = job.employer.toString()
+  let employers = await Employer.find()
+  let jobEmployer = { name: ''}
+  employers.forEach(employer => {
+    if (employer.id === employerID)
+      jobEmployer.name = employer.name
+  })
+  res.render('jobs/view', {employer: jobEmployer, job: job})
+  } catch {
+  res.redirect('/')
+  }
+})
 
+//EDIT JOBS
+router.get('/:id/edit', async (req,res) => {
+  let employers = await Employer.find()
 
+  try {
+    const job = await Job.findById(req.params.id)
+    res.render('jobs/edit',{ job: job, employers: employers })
+  } catch {
+    res.send('fuck up')
+  }
+})
+
+//UPDATE JOBS
+router.put('/:id', async (req,res) => {
+  let job 
+  try {
+    job = await Job.findById(req.params.id)
+    job.title = req.body.title
+    job.wage = req.body.wage
+    job.employer = req.body.employer
+    job.description = req.body.description
+    await job.save() 
+    res.redirect(`/jobs/${job.id}`)
+  } catch {
+    if (job == null) {
+      res.redirect('/')
+    } else {
+      res.render('jobs/edit', {
+        job: job,
+        errorMessage: 'Error updating job'
+      })
+    }
+  }
+})
+//DELETE JOB
+router.delete('/:id', async (req,res) => {
+  let job 
+  try {
+    job = await Job.findById(req.params.id)
+    await job.remove()
+    res.redirect(`/jobs`)
+  } catch {
+    if (job == null) {
+      res.redirect('/')
+    } else {
+      res.redirect(`/jobs/${job.id}`)
+    }
+  }
+})
 module.exports = router

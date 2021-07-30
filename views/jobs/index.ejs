@@ -16,5 +16,10 @@
 
 <br>
 <% jobs.forEach(job => { %>
+  
   <div>EMPLOYER NAME HERE <br>  <%= job.title %> <br> $<%= job.wage %>/hour </div>
+  <a href="/jobs/<%= job.id %>">View</a>
+  <a href="/jobs/<%= job.id %>/edit">Edit</a>
+  <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>
+</form>
 <% }) %>

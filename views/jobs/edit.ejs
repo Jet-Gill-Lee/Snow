@@ -1,0 +1,10 @@
+<h2>Edit Job</h2>
+
+<form action="/jobs/<%= job.id %>?_method=PUT" method="POST">
+  <%- include('_form_fields')%>
+  <br>
+  <a href="/jobs">BACK TO JOB LISTINGS</a>
+  <br>
+  <button type="submit">Update</button>
+</form>
+
