@@ -5,9 +5,12 @@
 <button type='submit'>SEARCH</button>
 </form>
 <br>
+<div>
 <% employers.forEach(employer => { %>
   <div> <%= employer.name %> </div>
   <a href="/employers/<%= employer.id %>">View</a>
   <a href="/employers/<%= employer.id %>/edit">Edit</a>
+  <%- include('../partials/deleteForm', {url: `/employers/${employer.id}` }) %>
+</form>
 <% }) %>
-
+</div>

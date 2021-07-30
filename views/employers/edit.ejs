@@ -1,0 +1,9 @@
+<h2>Edit Employer</h2>
+
+<form action="/employers/<%= employer.id %>?_method=PUT" method="POST">
+  <%- include('_form_fields')%>
+  <a href="/employers">BACK TO EMPLOYERS LIST</a>
+
+  <button type="submit">Update</button>
+</form>
+

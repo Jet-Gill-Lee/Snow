@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router();
-const Employer = require('../models/employer')
+const Employer = require('../models/employer');
+const Job = require('../models/job');
 
 //All employers
 router.get('/', async (req, res) => {
@@ -16,7 +17,6 @@ router.get('/', async (req, res) => {
 
   }
 })
-
 //New employer
 router.get('/new', (req, res) => {
   res.render('employers/new', {employer: new Employer()})
@@ -29,8 +29,8 @@ router.post('/', async (req, res) => {
   })
   try {
     const newEmployer = await employer.save()
-    res.redirect(`employers`)
-    // res.redirect(`employers/${newEmployer.id}`)
+  
+    res.redirect(`employers/${newEmployer.id}`)
   } catch {
     res.render('employers/new', {
       employer: employer,
@@ -39,20 +39,60 @@ router.post('/', async (req, res) => {
   }
 })
 ///show employer
-router.get('/:id', (req, res) => {
-  res.send('show employer ' + req.params.id)
+router.get('/:id', async (req, res) => {
+  try {
+  let employer = await Employer.findById(req.params.id)
+  let jobs = await Job.find({ employer: employer.id }).limit(6).exec()
+  res.render('employers/view', {employer: employer, jobs: jobs})
+
+  } catch {
+  res.redirect('/')
+  }
 })
 //edit employer
-router.get('/:id/edit', (req, res) => {
-  res.render( + req.params.id)
+router.get('/:id/edit', async (req, res) => {
+  try {
+    const employer = await Employer.findById(req.params.id)
+    res.render('employers/edit', { employer: employer }) 
+  } catch {
+    res.send('fuck up')
+  }
 })
+  
 //update employer
-router.put('/:id', (req, res) => {
-  res.send('update employer' + req.params.id)
+router.put('/:id', async (req, res) => {
+  let employer
+  try {
+    employer = await Employer.findById(req.params.id)
+    employer.name = req.body.name
+    await employer.save()
+    res.redirect(`/employers/${employer.id}`)
+  } catch {
+    if (employer == null) {
+      res.redirect('/')
+    } else {
+      res.render('employers/edit', {
+        employer: employer,
+        errorMessage: 'Error updating Employer'
+      })
+    }
+  }
 })
-//delete employer
-router.delete('/:id', (req,res) => {
 
+//delete employer
+router.delete('/:id', async (req,res) => {
+  let employer
+  try {
+    employer = await Employer.findById(req.params.id)
+    await employer.remove()
+    res.redirect(`/employers`)
+  } catch {
+    if (employer == null) {
+      res.redirect('/')
+    } else {
+      res.redirect(`/employers/${employer.id}`)
+    }
+  }
 })
 
 module.exports = router

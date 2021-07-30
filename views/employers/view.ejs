@@ -1,0 +1,17 @@
+<h2>View Employer</h2>
+
+<div>
+  Employer Name: <%= employer.name %> 
+  <br>
+  <a href="/employers/<%= employer.id %>/edit">Edit</a>
+  <%- include('../partials/deleteForm', {url: `/employers/${employer.id}` }) %>
+</form>
+<h3>Jobs Posted by employer</h3>
+<% if (jobs.length > 0) { %>
+  <% jobs.forEach(job => { %>
+    <div>EMPLOYER NAME HERE <br>  <%= job.title %> <br> $<%= job.wage %>/hour </div>
+  <% }) %>
+<% } else {%>
+    <div>This employer has posted no jobs</div>
+<% } %>
+<a href="/employers">BACK TO EMPLOYERS LIST</a>
