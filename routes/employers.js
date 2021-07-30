@@ -38,8 +38,21 @@ router.post('/', async (req, res) => {
     })
   }
 })
+///show employer
+router.get('/:id', (req, res) => {
+  res.send('show employer ' + req.params.id)
+})
+//edit employer
+router.get('/:id/edit', (req, res) => {
+  res.render( + req.params.id)
+})
+//update employer
+router.put('/:id', (req, res) => {
+  res.send('update employer' + req.params.id)
+})
+//delete employer
+router.delete('/:id', (req,res) => {
 
-
-
+})
 
 module.exports = router

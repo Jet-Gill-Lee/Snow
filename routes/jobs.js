@@ -6,14 +6,39 @@ const employer = require('../models/employer');
 
 //Display all jobs
 router.get('/', async (req, res) => {
+  //NOT CLEARING EMPLOYER SEARCH PARAMETERS UPON SEARCHING AGAIN, WORKING IF I RELOAD PAGE
+  //NEED TO COMPLETELY RESTRUCTURE THIS TO FIX I THINK 
+  //FUCK IT FOR NOW
+  //LEARN MONGOOSE POPULATE TO GRAB EMPLOYER AS AN OBJECT MAYBE
+  //PUT FUNCTION TO FILTER IN IF STATEMENTS ABOUT WHETHER PARTICULAR PARAMETER IS EMPTY AND RETURN NULL OTHERWISE? 
+  //ISSUE COMING FROM NOT BEING ABLE TO PASS EMPLOYERID VALUE WITHOUT LEAVING VALUE AS "EMPLOYER.ID" I THINK
+  //WDS CODE BELOW 
+  // let query = Job.find()
+  // if (req.query.x != null && req.query.x != '') {
+  //   query = "filter"
+  // }
+  // try {
+  //   const jobs = await query.exec()
+  //   res.render('jobs/index', {jobs: jobs, searchOptions: req.query})
+  // }
+  //FROM HERE IS MY SEMI(QUITE) COOKED VERSION
   let searchOptions = {}
   let array1 = []
-    try{
+    try {
     employers = await Employer.find()
-    let jobs = await Job.find()
+    let jobs = await Job.find({})
+    if (req.query.title || req.query.employer){
     let jobsList = []
-    let searchTitle = req.query.title.toLowerCase()
-    let employerID = req.query.employer
+    if (req.query.title){
+      searchTitle = req.query.title.toLowerCase()
+    } else {
+      searchTitle = null
+    }
+    if (req.query.employer) {
+      employerID = req.query.employer
+    } else {
+      employerID = null
+    }
     let jobsToPrint = function () {
       for (i = 0; i< jobs.length; i++) {
         if (jobs[i].employer.toString() == employerID) {
@@ -23,16 +48,19 @@ router.get('/', async (req, res) => {
     }
     jobsToPrint()
     jobsList.forEach(job => {
-    let jobInner = job.title.toLowerCase()
-    if (jobInner.includes(searchTitle) || searchTitle == null || ''){
-      array1.push(job)
-    }
+      let jobInner = job.title.toLowerCase()
+      if (jobInner.includes(searchTitle) || searchTitle == null || ''){
+        array1.push(job)
+      }
     })
-      res.render('jobs/index', { searchOptions: searchOptions, jobs: array1 })
+    } else {
+      array1 = await Job.find()
+      console.log('we are here')
+    }
+    res.render('jobs/index', { searchOptions: req.query, jobs: array1 })
   } catch {
     res.send('unable to load page')
   }
-  
 })
 
 //New Job Page

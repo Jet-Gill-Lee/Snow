@@ -7,5 +7,7 @@
 <br>
 <% employers.forEach(employer => { %>
   <div> <%= employer.name %> </div>
+  <a href="/employers/<%= employer.id %>">View</a>
+  <a href="/employers/<%= employer.id %>/edit">Edit</a>
 <% }) %>
 
