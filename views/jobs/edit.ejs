@@ -3,8 +3,10 @@
 <form action="/jobs/<%= job.id %>?_method=PUT" method="POST">
   <%- include('_form_fields')%>
   <br>
-  <a href="/jobs">BACK TO JOB LISTINGS</a>
+  <div class='btn-row'>
+  <a class='btn-primary btn'class='btn-primary btn'href="/jobs">BACK TO JOB LISTINGS</a>
   <br>
-  <button type="submit">Update</button>
+  <button class='btn-primary btn' type="submit">Update</button>
+  </div>
 </form>
 

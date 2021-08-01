@@ -1,4 +1,4 @@
-<h2 class='page-header'>View Job</h2>>
+<h2 class='page-header'>View Job</h2>
 
 <div>
   Job Title: <%= job.title %> 
@@ -7,8 +7,10 @@
   <br>
   Description: <%= job.description %>
   <br>
-  <a href="/jobs/<%= job.id %>/edit">Edit</a>
+  <div class='btn-row'>
+  <a class='btn-primary btn' href="/jobs/<%= job.id %>/edit">Edit</a>
   <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>
 </form>
 
-<a href="/jobs">BACK TO JOB LISTINGS</a>
+<a class='btn-primary btn' href="/jobs">BACK TO JOB LISTINGS</a>
+</div>

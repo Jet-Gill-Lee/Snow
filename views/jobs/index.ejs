@@ -10,7 +10,7 @@
   <option label="<%= employer.name %>" value="<%= employer.id %>">
 <% }) %>
 </select>
-<button type="submit">Search</button>
+<button class='btn btn-primary' type="submit">Search</button>
 
 </form>
 
@@ -21,9 +21,12 @@
       <%= employer.name %>
  <% } %>
  <% }) %>
-  <br>  <%= job.title %> <br> $<%= job.wage %>/hour </div>
-  <a href="/jobs/<%= job.id %>">View</a>
-  <a href="/jobs/<%= job.id %>/edit">Edit</a>
+  <br>  <%= job.title %> <br> $<%= job.wage %>/hour <br><%=job.description%></div>
+
+  <div class='btn-row'>
+  <a class='btn btn-primary' href="/jobs/<%= job.id %>">View</a>
+  <a class='btn btn-primary' href="/jobs/<%= job.id %>/edit">Edit</a>
   <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>
+  </div>
 </form>
 <% }) %>

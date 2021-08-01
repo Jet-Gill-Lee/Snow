@@ -2,15 +2,16 @@
 <form action="/employers" method="GET">
 <label for="name">title</label>
 <input type="text" name='name' value="<%= searchOptions.name %>">
-<button type='submit'>SEARCH</button>
+<button class='btn btn-primary' type='submit'>SEARCH</button>
 </form>
 <br>
 <div>
 <% employers.forEach(employer => { %>
   <div> <%= employer.name %> </div>
-  <a href="/employers/<%= employer.id %>">View</a>
-  <a href="/employers/<%= employer.id %>/edit">Edit</a>
+  <div class='btn-row'>
+  <a class='btn btn-primary' href="/employers/<%= employer.id %>">View</a>
+  <a class='btn btn-primary' href="/employers/<%= employer.id %>/edit">Edit</a>
   <%- include('../partials/deleteForm', {url: `/employers/${employer.id}` }) %>
-</form>
+  </div>
 <% }) %>
 </div>

@@ -52,7 +52,6 @@ try {
     }
   })
   } else if (req.query.title) {
-    console.log('here')
     let jobsList= await Job.find() 
     jobsList.forEach(job => {
       let searchTitle = req.query.title.toLowerCase()
@@ -135,7 +134,6 @@ router.get('/:id/edit', async (req,res) => {
   try {
     const job = await Job.findById(req.params.id).populate('employer').exec()
     let employer = job.employer
-    console.log(employer)
     res.render('jobs/edit',{ job: job, employers: employers })
   } catch {
     res.send('fuck up')
