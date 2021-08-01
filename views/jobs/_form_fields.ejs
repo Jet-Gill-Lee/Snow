@@ -10,15 +10,18 @@
 <br>
 <select name="employer">
 <% employers.forEach(employer => { %>
-<% if (employer.id === job.employer) { %>
-  <option selected label="<%=employer.name%>" value="<%=employer.id%>">
+<% if (job.employer === employer) { %>
+  <option selected label="<%= job.employer.name %>" value=" <%= employer.id %> ">
 <% } else { %>
-  <option label="<%=employer.name%>" value="<%=employer.id%>">
+  <option label="<%=employer.name %>" value="<%= employer.id %>">
   <% } %>
 <% }) %>
 </select>
 <br>
 <label>Job description</label>
 <br>
-<textarea name="description" value="<%= job.description%>">A description of the job</textarea>
-
+<% if (job.description) { %>
+  <textarea name="description" value="<%=job.description%>"> <%=job.description%> </textarea>
+ <% } else { %>
+<textarea name="description" value="<%= job.description%>">Job description goes here</textarea>
+<% } %>

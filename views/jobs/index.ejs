@@ -1,4 +1,4 @@
-<h2>Job Listings</h2>
+<h2 class='page-header'>Job Listings</h2>
 
 <form action="/jobs" method="GET">
 <label for="title">Job Title</label>
@@ -16,8 +16,12 @@
 
 <br>
 <% jobs.forEach(job => { %>
-  
-  <div>EMPLOYER NAME HERE <br>  <%= job.title %> <br> $<%= job.wage %>/hour </div>
+  <div> <% employers.forEach(employer => { %>
+  <%  if (employer.id == job.employer) { %>
+      <%= employer.name %>
+ <% } %>
+ <% }) %>
+  <br>  <%= job.title %> <br> $<%= job.wage %>/hour </div>
   <a href="/jobs/<%= job.id %>">View</a>
   <a href="/jobs/<%= job.id %>/edit">Edit</a>
   <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>

@@ -1,8 +1,11 @@
-<h2>View Job</h2>
+<h2 class='page-header'>View Job</h2>>
 
 <div>
   Job Title: <%= job.title %> 
+  <br>
   Employer: <%= employer.name %>
+  <br>
+  Description: <%= job.description %>
   <br>
   <a href="/jobs/<%= job.id %>/edit">Edit</a>
   <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>

@@ -13,70 +13,69 @@ router.get('/', async (req, res) => {
   //ISSUE COMING FROM NOT BEING ABLE TO PASS EMPLOYERID VALUE WITHOUT LEAVING VALUE AS "EMPLOYER.ID" I THINK
   //WDS CODE BELOW 
   // let query = Job.find()
-  // if (req.query.x != null && req.query.x != '') {
+  // if (req.query.x != n ull && req.query.x != '') {
   //   query = "filter"
   // }
   // try {
   //   const jobs = await query.exec()
   //   res.render('jobs/index', {jobs: jobs, searchOptions: req.query})
   // }
-  //FROM HERE IS MY SEMI(QUITE) COOKED VERSION
-  
-  let array1 = []
-    try {
-    employers = await Employer.find()
-    let jobs = await Job.find({})
-    if (req.query.title && req.query.employer){
-    let jobsList = []
-    if (req.query.title){
-      searchTitle = req.query.title.toLowerCase()
-    } else {
-      searchTitle = null
-    }
-    if (req.query.employer) {
-      employerID = req.query.employer
-    } else {
-      employerID = null
-    }
-    let jobsToPrint = function () {
-      for (i = 0; i< jobs.length; i++) {
-        if (jobs[i].employer.toString() == employerID) {
-        jobsList.push(jobs[i])
-        }
+  //FROM HERE IS MY SEMI(QUITE) COOKED VERSION 
+let array1 = []
+try {
+  let employers = await Employer.find()
+  let jobs = await Job.find().populate('employer').exec()
+  if (req.query.title && req.query.employer){
+  let jobsList = []
+  if (req.query.title){
+    searchTitle = req.query.title.toLowerCase()
+  } else {
+    searchTitle = null
+  }
+  if (req.query.employer) {
+    employerID = req.query.employer
+  } else {
+    employerID = null
+  }
+  let jobsToPrint = function () {
+    for (i = 0; i< jobs.length; i++) {
+      if (jobs[i].employer.toString() == employerID) {
+      jobsList.push(jobs[i])
       }
     }
-    jobsToPrint()
+  }
+  jobsToPrint()
+  jobsList.forEach(job => {
+    let jobInner = job.title.toLowerCase()
+    if (jobInner.includes(searchTitle) || searchTitle == null || ''){
+      array1.push(job)
+    }
+  })
+  } else if (req.query.title) {
+    console.log('here')
+    let jobsList= await Job.find() 
     jobsList.forEach(job => {
+      let searchTitle = req.query.title.toLowerCase()
       let jobInner = job.title.toLowerCase()
-      if (jobInner.includes(searchTitle) || searchTitle == null || ''){
+      if (jobInner.includes(searchTitle)){
+        array1.push(job)
+      }
+    }) 
+  } else if (req.query.employer) {
+    let jobsList = await Job.find() 
+    let employerID = req.query.employer
+    jobsList.forEach(job => { 
+      if (job.employer == employerID) {
         array1.push(job)
       }
     })
-    } else if (req.query.title) {
-      console.log('here')
-      let jobsList= await Job.find() 
-      jobsList.forEach(job => {
-        let searchTitle = req.query.title.toLowerCase()
-        let jobInner = job.title.toLowerCase()
-        if (jobInner.includes(searchTitle)){
-          array1.push(job)
-        }
-      }) 
-    } else if (req.query.employer) {
-      let jobsList = await Job.find() 
-      let employerID = req.query.employer
-      jobsList.forEach(job => { 
-        if (job.employer == employerID) {
-          array1.push(job)
-        }
-      })
-    } else {
-      array1 = await Job.find()
-    }
-    res.render('jobs/index', { searchOptions: req.query, jobs: array1 })
-  } catch {
-    res.send('unable to load page')
+  } else {
+    array1 = await Job.find()
   }
+  res.render('jobs/index', { searchOptions: req.query, jobs: array1, employers: employers, employer:employer})
+} catch {
+  res.send('unable to load page')
+}
 })
 
 //New Job Page
@@ -100,43 +99,43 @@ router.post('/', async (req,res) => {
 }
 })
 
-async function renderNewPage(res, job, hasError) {
-  try{
-    const employers = await Employer.find({})
-    const job = new Job()
-    const params = {
-      employers: employers,
-      job: job
-    }
-    if (hasError) params.errorMessage = 'Error posting job'
-    res.render('jobs/new', params)
-    } catch {
-    res.redirect('/jobs')
-  }
-}
+
 //SHOW JOB
 router.get('/:id', async (req, res) => {
-  try {
-  let job = await Job.findById(req.params.id)
-  let employerID = job.employer.toString()
-  let employers = await Employer.find()
-  let jobEmployer = { name: ''}
-  employers.forEach(employer => {
-    if (employer.id === employerID)
-      jobEmployer.name = employer.name
-  })
-  res.render('jobs/view', {employer: jobEmployer, job: job})
-  } catch {
+try{
+  const job = await Job.findById(req.params.id)
+                        .populate('employer')
+                        .exec()
+  let employer = await job.employer
+  res.render('jobs/view', { job: job, employer: employer })
+} catch {
   res.redirect('/')
-  }
+}
 })
+// router.get('/:id', async (req, res) => {
+//   try {
+//   let job = await Job.findById(req.params.id)
+//   let employerID = job.employer.toString()
+//   let employers = await Employer.find()
+//   let jobEmployer = { name: ''}
+//   employers.forEach(employer => {
+//     if (employer.id === employerID)
+//       jobEmployer.name = employer.name
+//   })
+//   res.render('jobs/view', {employer: jobEmployer, job: job})
+//   } catch {
+//   res.redirect('/')
+//   }
+// })
 
 //EDIT JOBS
+//maybe work out how to use renderNew/renderEdit at bottom later
 router.get('/:id/edit', async (req,res) => {
   let employers = await Employer.find()
-
   try {
-    const job = await Job.findById(req.params.id)
+    const job = await Job.findById(req.params.id).populate('employer').exec()
+    let employer = job.employer
+    console.log(employer)
     res.render('jobs/edit',{ job: job, employers: employers })
   } catch {
     res.send('fuck up')
@@ -180,4 +179,25 @@ router.delete('/:id', async (req,res) => {
     }
   }
 })
+async function renderNewPage(res, job, hasError) {
+  renderFormPage(res, job, 'new', hasError)
+}
+async function renderEditPage(res, job, hasError) {
+  renderFormPage(res, job, 'edit', hasError)
+}
+async function renderFormPage(res, job, form, hasError) {
+  try{
+    const employers = await Employer.find({})
+    const params = {
+      employers: employers,
+      job: job
+    }
+    if (hasError) params.errorMessage = 'Error posting job'
+    res.render(`jobs/${form}`, params)
+    } catch {
+    res.redirect('/jobs')
+  }
+}
+
+
 module.exports = router

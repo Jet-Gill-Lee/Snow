@@ -91,8 +91,9 @@ router.delete('/:id', async (req,res) => {
       res.redirect('/')
     } else {
       res.redirect(`/employers/${employer.id}`)
-    }
+    } 
   }
 })
+
 
 module.exports = router
