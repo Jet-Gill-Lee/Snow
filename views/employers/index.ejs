@@ -1,17 +1,21 @@
-<h2 class='page-header'>SEARCH employers</h2>
+<h2 class='page-header'>Search Employers</h2>
+<div class="employer-search form-item">
 <form action="/employers" method="GET">
-<label for="name">title</label>
+<label style="font-size:1.5rem;" name="name">Employer Name</label>
 <input type="text" name='name' value="<%= searchOptions.name %>">
-<button class='btn btn-primary' type='submit'>SEARCH</button>
+<button class='btn btn-primary' type='submit'>Search</button>
 </form>
-<br>
-<div>
+</div>
+
 <% employers.forEach(employer => { %>
-  <div> <%= employer.name %> </div>
-  <div class='btn-row'>
-  <a class='btn btn-primary' href="/employers/<%= employer.id %>">View</a>
-  <a class='btn btn-primary' href="/employers/<%= employer.id %>/edit">Edit</a>
-  <%- include('../partials/deleteForm', {url: `/employers/${employer.id}` }) %>
+  <div class='employer-list-item'> 
+    <div class='employer-name'>
+      <%= employer.name %>
+    </div> 
+      <div class='employer-btn-row'>
+      <a class='btn btn-primary' href="/employers/<%= employer.id %>">View</a>
+      <a class='btn btn-primary' href="/employers/<%= employer.id %>/edit">Edit</a>
+      <%- include('../partials/deleteForm', {url: `/employers/${employer.id}` }) %>
+    </div>
   </div>
 <% }) %>
-</div>

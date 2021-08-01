@@ -1,32 +1,27 @@
 <h2 class='page-header'>Job Listings</h2>
 
 <form action="/jobs" method="GET">
+<div>
+<div class="job-search-fields form-row">
+<div class='form-item'>
 <label for="title">Job Title</label>
 <input type="text" name="title" value="<% searchOptions.title %>">
-
-<select name="employer">
-  <option label="" value=""></option>
+</div>
+<div class='form-item'>
+<label for="employer">Employer</label>
+<select class='form-item' name="employer">
+  <option label="" ></option>
 <% employers.forEach(employer => { %>
   <option label="<%= employer.name %>" value="<%= employer.id %>">
 <% }) %>
 </select>
-<button class='btn btn-primary' type="submit">Search</button>
-
+</div>
+<div class="form-item" style='width:100px;align-self:flex-end;'>
+<button style='text-align:center;' class='btn-primary btn' type="submit">Search</button>
+</div>
+</div>
 </form>
 
-<br>
 <% jobs.forEach(job => { %>
-  <div> <% employers.forEach(employer => { %>
-  <%  if (employer.id == job.employer) { %>
-      <%= employer.name %>
- <% } %>
- <% }) %>
-  <br>  <%= job.title %> <br> $<%= job.wage %>/hour <br><%=job.description%></div>
-
-  <div class='btn-row'>
-  <a class='btn btn-primary' href="/jobs/<%= job.id %>">View</a>
-  <a class='btn btn-primary' href="/jobs/<%= job.id %>/edit">Edit</a>
-  <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>
-  </div>
-</form>
+  <%-include('../partials/jobBox', {job: job}) %>
 <% }) %>

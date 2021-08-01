@@ -1,9 +1,12 @@
 <h2 class='page-header'>CREATE NEW employer</h2>
 
 <form action="/employers" method="POST">
-  <%- include('_form_fields')%>
-  <a class='btn btn-primary' href="/employers">BACK TO EMPLOYERS LIST</a>
-
-  <button class='btn btn-primary' type="submit">Create</button>
+  <div class="new-employer-field">
+   <%- include('_form_fields')%>
+  </div>
+  <div class='btn-row'>
+    <a class='btn btn-primary' href="/employers">Back</a>
+    <button class='btn btn-primary' type="submit">Create</button>
+  </div>
 </form>
 

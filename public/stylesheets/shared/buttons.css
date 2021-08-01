@@ -12,7 +12,7 @@
   border: 1px solid var(--color-button-border);
   border-radius: 0.5rem;
   padding: 0.2rem 0.8rem;
-  font-size: 1.2rem;
+  font-size: 0.8rem;
   cursor: pointer;
   text-decoration: none;
   text-align: center;
@@ -36,11 +36,13 @@
 }
 .btn-row {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  align-items: center;
+  max-width: 900px;
+  margin: auto;
 }
-.btn-row > * {
-  margin-left: 1rem;
-}
+
+
 .btn-row > *:first-child {
   margin-left: 0;
 }

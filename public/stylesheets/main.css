@@ -1,8 +1,9 @@
 @import 'shared/variables.css';
 @import 'shared/header.css';
 @import 'shared/buttons.css';
+@import 'shared/forms.css';
+@import 'shared/jobbox.css';
 * {
-  text-align: center;
   list-style: none;
 }
 *, *::before, *::after {
@@ -26,5 +27,48 @@ body {
   margin: 0 2rem;
 }
 .page-header{
-  color: var(--color-text-light)
+  color: var(--color-text-light);
+  text-align: center;
+}
+.employer-search {
+  text-align: center;
+}
+.employer-name {
+  font-size: 1.7rem;
+}
+.employer-list-item {
+  margin:auto;
+  display:flex;
+  align-items: center;
+  max-width: 500px;
+  text-align: center;
+  padding-bottom: .5rem;
+  justify-content: space-between;
+}
+.employer-btn-row {
+  width:50%;
+  display: flex;
+  justify-content: flex-end;
+}
+.jobs-list-item {
+  text-align: center;
+  background-color: grey;
+  padding: 1rem;
+}
+.inner-container > form {
+  text-align: center;
+}
+
+.new-employer-field {
+  padding-bottom: 0.3rem;
+  font-size: 1.8rem;
+}
+.employer-view-name {
+  text-align: center;
+  font-size: 2rem;
+}
+.employer-jobs {
+  margin: auto;
+  width: 60%;
+  padding-bottom: 0.5rem;
 }

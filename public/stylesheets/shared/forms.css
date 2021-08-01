@@ -1,0 +1,65 @@
+:root {
+  --form-label-font-size: 1.2rem;
+  --form-background-color: hsl(var(--color-base-hue), 100%, 31%);
+  --form-background-color-light: hsl(var(--color-base-hue), 1000%, 10%);
+  --form-border-color: hsl(var(--color-base-hue), 100%, 50%);
+  --form-border-color-light: hsl(var(--color-base-hue), 100%, 70%)
+}
+.new-job-form {
+  max-width: 750px;
+  margin: auto;
+}
+.form-row{
+  display: flex;
+  margin: auto;
+  width: 100%;
+  max-width: 750px;
+  justify-content: space-around;
+  text-align-last: left;
+  flex-wrap: wrap;
+}
+.employer-select {
+  width: fit-content;
+  margin: auto;
+  
+
+}
+.form-item{
+  padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-basis: 0;
+  
+}
+
+.form-item > label {
+  font-size: var(--form-label-font-size);
+  margin-bottom: 0.2rem;
+}
+.form-item input, .form-item select, .form-item textarea {
+  border-radius: .25rem;
+  padding: .25rem;
+  border: 1px solid var(--form-border-color);
+  background: var(--form-background-color);
+  outline: none;
+  color: var(--color-text-light);
+  font-size: 1rem;
+  font-weight: normal;
+}
+.form-item input:focus, .form-item select:focus, .form-item textarea:focus {
+  border: 1px solid var(--form-border-color-light);
+  outline: none;
+}
+
+.form-item textarea {
+  height: 150px;
+  resize: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}

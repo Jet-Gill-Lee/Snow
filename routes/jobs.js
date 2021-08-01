@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
 let array1 = []
 try {
   let employers = await Employer.find()
-  let jobs = await Job.find().populate('employer').exec()
+  let jobs = await Job.find()
   if (req.query.title && req.query.employer){
   let jobsList = []
   if (req.query.title){
@@ -87,7 +87,8 @@ router.post('/', async (req,res) => {
     title: req.body.title,
     wage: req.body.wage,
     description: req.body.description,
-    employer: req.body.employer
+    employer: req.body.employer,
+    benefits: req.body.benefits
   })
   try{
     const newJob = await job.save()

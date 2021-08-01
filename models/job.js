@@ -18,6 +18,11 @@ const jobSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  benefits: {
+    type: String,
+    required: true,
+    default: 'no benefits'
+  },
   datePosted: {
     type: Date,
     default: Date.now

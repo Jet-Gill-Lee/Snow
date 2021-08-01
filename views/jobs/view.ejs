@@ -1,16 +1,3 @@
 <h2 class='page-header'>View Job</h2>
 
-<div>
-  Job Title: <%= job.title %> 
-  <br>
-  Employer: <%= employer.name %>
-  <br>
-  Description: <%= job.description %>
-  <br>
-  <div class='btn-row'>
-  <a class='btn-primary btn' href="/jobs/<%= job.id %>/edit">Edit</a>
-  <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>
-</form>
-
-<a class='btn-primary btn' href="/jobs">BACK TO JOB LISTINGS</a>
-</div>
+<%- include('../partials/jobBox', {job: job}) %>

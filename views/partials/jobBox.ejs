@@ -1,0 +1,19 @@
+<div class="job-box">
+  <div class="job-box-title">
+    <h4><%=job.title %></h4>
+    <span><%=job.employer.name%></span>
+    <span>$<%=job.wage%></span>
+  </div>
+  <div class="job-box-content">
+    <p>Description:<br><span><%=job.description%></span></p>
+   
+    <p>Benefits: <br> <span><%=job.benefits%></span></p>
+  </div>
+
+
+  <div class='job-box-buttons'>
+    <a class='btn-primary btn' href='/jobs/<%=job.id%>'>View Job</a>
+    <a class='btn-primary btn' href="/jobs/<%= job.id %>/edit">Edit</a>
+    <%- include('../partials/deleteForm', {url: `/jobs/${job.id}` }) %>
+  </div>
+</div>

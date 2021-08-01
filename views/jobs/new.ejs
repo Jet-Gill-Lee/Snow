@@ -1,11 +1,10 @@
 <h2 class='page-header'>POST NEW JOB</h2>
 
-<form action="/jobs" method="POST">
+<form class='new-job-form' action="/jobs" method="POST">
   <%- include('_form_fields')%>
-  <br>
-  <div class='btn-row'>
-  <button class='btn btn-primary' type="submit">Submit</button>
-  <br>
-  <a class='btn btn-primary' href="/jobs">Back to job listings</a>
+
+  <div style="padding-right:0.4rem;" class='btn-row'>
+  <button class='btn btn-primary' type="submit">Post</button>
+  <a class='btn btn-primary' href="/jobs">Back to jobs</a>
   </div>
 </form>
